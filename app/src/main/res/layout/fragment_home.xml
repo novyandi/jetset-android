@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <xyz.girudo.jetset.customviews.BaseSwipeRefreshLayout
+        android:id="@+id/fh_swipe_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ViewAnimator
+            android:id="@+id/fh_animator"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ProgressBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/fh_homelist"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/colorPrimary"
+                android:divider="@color/text_inactive"
+                android:dividerHeight="1dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="@string/home_no_data"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="@color/cyan_dark" />
+        </ViewAnimator>
+    </xyz.girudo.jetset.customviews.BaseSwipeRefreshLayout>
+</android.support.design.widget.CoordinatorLayout>

@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "179319068699",
+    "firebase_url": "https://jetset-e705f.firebaseio.com",
+    "project_id": "jetset-e705f",
+    "storage_bucket": "jetset-e705f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:179319068699:android:012bfd56bc7c8f36",
+        "android_client_info": {
+          "package_name": "xyz.girudo.jetset"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "179319068699-hh596e84tft6qn8j865i4qeiq7p4jrmq.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "xyz.girudo.jetset",
+            "certificate_hash": "44CCA6531CCE3CDF596693B76D870E888CB6BBC5"
+          }
+        },
+        {
+          "client_id": "179319068699-b3k86kmc2qgu0905b0i5bbekfua260vl.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyASgWNKtSs8xoSEoMTR1TRzTLKw1AhTt1s"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "179319068699-b3k86kmc2qgu0905b0i5bbekfua260vl.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

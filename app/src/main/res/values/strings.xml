@@ -1,0 +1,41 @@
+<resources>
+    <string name="app_name">Jetset</string>
+
+    <!--Splash Activity-->
+    <string name="sp_txt_welcome">Loading…</string>
+    <string name="sp_txt_failed">Failed. Close app and try again.</string>
+    <string name="sp_access_message">You need to grant access to</string>
+    <string name="sp_cancel_info">%1$s must have %2$s and %3$s permissions to run</string>
+    <string name="sp_info_denied">Some Permission is Denied</string>
+    <string name="sp_contacts">Contacts</string>
+    <string name="sp_storage">Storage</string>
+
+    <!--Dialog-->
+    <string name="ok">Ok</string>
+    <string name="cancel">Cancel</string>
+    <string name="error_connection_title">No Internet connection</string>
+    <string name="error_connection_message">Please check your network connection.</string>
+    <string name="info_exit">"Are you sure you want to exit?"</string>
+    <string name="info_logout">"Are you sure you want to logout?"</string>
+
+    <!--LeftSlider-->
+    <string name="ls_txt_loginTitle">Logged in as</string>
+    <string name="ls_txt_departement">Departements</string>
+    <string name="ls_txt_newArrivals">New Arrivals</string>
+    <string name="ls_txt_mens">Mens</string>
+    <string name="ls_txt_womens">Womens</string>
+    <string name="ls_txt_kids">Kids</string>
+    <string name="ls_txt_cart">Cart</string>
+    <string name="ls_txt_myAccount">My Account</string>
+    <string name="ls_txt_about">About</string>
+    <string name="ls_txt_contact">Contact</string>
+    <string name="ls_txt_logout">Logout</string>
+
+    <!--Fragment HomeMenu-->
+    <string name="home_no_data">Data not found</string>
+    <string name="home_title">Shop</string>
+    <string name="home_txt_newArrivals">New Arrivals</string>
+    <string name="home_txt_mens">Mens</string>
+    <string name="home_txt_womens">Womens</string>
+    <string name="home_txt_kids">Kids</string>
+</resources>
