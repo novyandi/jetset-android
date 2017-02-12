@@ -44,10 +44,10 @@ public class SplashScreenActivity extends Activity {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             final List<String> permissionsNeeded = new ArrayList<String>();
             final List<String> permissionsList = new ArrayList<String>();
-            if (!addPermission(permissionsList, Manifest.permission.GET_ACCOUNTS))
-                permissionsNeeded.add(getString(R.string.sp_contacts));
             if (!addPermission(permissionsList, Manifest.permission.WRITE_EXTERNAL_STORAGE))
                 permissionsNeeded.add(getString(R.string.sp_storage));
+            if (!addPermission(permissionsList, Manifest.permission.GET_ACCOUNTS))
+                permissionsNeeded.add(getString(R.string.sp_contacts));
             if (permissionsList.size() > 0) {
                 if (permissionsNeeded.size() > 0) {
                     // Need Rationale
@@ -142,20 +142,21 @@ public class SplashScreenActivity extends Activity {
             }
         });
 
-
-        if (!JetsetApp.checkConfig(SplashScreenActivity.this, Preferences.FIRST_START)) {
+        if (!JetsetApp.checkConfig(this, Preferences.FIRST_START)) {
             boolean isPrepared = prepareData();
-            if (isPrepared)
+            if (isPrepared) {
+                JetsetApp.setConfig(this, Preferences.FIRST_START, "true");
                 spAnimator.setDisplayedChild(1);
-            else
+            } else {
                 spAnimator.setDisplayedChild(2);
+            }
         } else {
             JetsetApp.log("Not first time", "i");
-            finish();
+            spAnimator.setDisplayedChild(1);
         }
 
         if (!JetsetApp.checkConfig(this, Preferences.NOTIFICATION))
-            JetsetApp.setConfig(this, Preferences.NOTIFICATION, "Y");
+            JetsetApp.setConfig(this, Preferences.NOTIFICATION, "true");
         JetsetApp.setConfig(this, Preferences.NOT_CHANGE_SCREEN, "true");
     }
 

@@ -14,4 +14,7 @@
     <color name="red_dark">#C0394C</color>
     <color name="text_inactive">#8D8D8D</color>
     <color name="text_active">#FFFFFF</color>
+    <color name="btn_normal">#343330</color>
+    <color name="btn_pressed">#FFFFFF</color>
+    <color name="colorTransparent">#00000000</color>
 </resources>

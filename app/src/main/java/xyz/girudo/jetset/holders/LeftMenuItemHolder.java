@@ -19,6 +19,8 @@ public class LeftMenuItemHolder extends BaseHolder<LeftMenu> {
     TextView txtTitle;
     @BindView(R.id.separator)
     LinearLayout separator;
+    @BindView(R.id.selector)
+    View selector;
 
     public LeftMenuItemHolder(Context context, View itemView, OnItemClickListener onItemClickListener) {
         super(context, itemView, onItemClickListener);
@@ -32,5 +34,17 @@ public class LeftMenuItemHolder extends BaseHolder<LeftMenu> {
 
     public void setShowSeparator(boolean isShow) {
         separator.setVisibility(isShow ? View.VISIBLE : View.GONE);
+    }
+
+    public TextView getTxtTitle() {
+        return txtTitle;
+    }
+
+    public LinearLayout getSeparator() {
+        return separator;
+    }
+
+    public View getSelector() {
+        return selector;
     }
 }

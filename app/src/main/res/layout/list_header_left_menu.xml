@@ -55,23 +55,9 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_marginBottom="20dp"
+        android:layout_marginBottom="10dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:layout_marginTop="20dp"
         android:background="@color/colorPrimary" />
-
-    <TextView
-        android:id="@+id/title"
-        style="?android:attr/textAppearanceMedium"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:duplicateParentState="true"
-        android:gravity="center_vertical"
-        android:paddingBottom="10dp"
-        android:paddingLeft="30dp"
-        android:text="@string/ls_txt_departement"
-        android:textColor="@color/text_inactive"
-        android:textSize="20sp"
-        android:textStyle="bold" />
 </LinearLayout>

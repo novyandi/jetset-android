@@ -17,8 +17,8 @@ public class JetsetApp extends Application {
 
     public static final String TOKEN_KEY = "token";
     public static String TOKEN;
-    private Context mContext;
     private static SharedPreferences PREFERENCES;
+    private Context mContext;
 
     public static void log(String message) {
         if (Config.isDevelopment) {
@@ -43,10 +43,6 @@ public class JetsetApp extends Application {
             }
             Log.i(Config.APP_NAME, message);
         }
-    }
-
-    public Context getContext() {
-        return mContext;
     }
 
     public static Session getSession(Context context) {
@@ -128,6 +124,10 @@ public class JetsetApp extends Application {
             result = Html.fromHtml(html);
         }
         return result;
+    }
+
+    public Context getContext() {
+        return mContext;
     }
 
     public String getUrl() {

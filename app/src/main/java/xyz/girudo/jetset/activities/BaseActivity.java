@@ -16,7 +16,6 @@ import android.widget.TextView;
 
 import xyz.girudo.jetset.R;
 import xyz.girudo.jetset.callbacks.OnActionbarListener;
-import xyz.girudo.jetset.controllers.RealmDataControl;
 import xyz.girudo.jetset.fragments.BaseFragment;
 import xyz.girudo.jetset.helpers.FragmentHelper;
 import xyz.girudo.jetset.helpers.TextHelper;
@@ -91,6 +90,12 @@ public abstract class BaseActivity extends AppCompatActivity implements Activity
         }
     }
 
+    public void setColorActionBar(int color) {
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null)
+            actionBar.getCustomView().setBackgroundColor(color);
+    }
+
     private void actionbarClickListener() {
         View actionLeft = actionBarView.findViewById(R.id.left_icon_container);
         View actionRight = actionBarView.findViewById(R.id.right_icon_container);
@@ -123,7 +128,7 @@ public abstract class BaseActivity extends AppCompatActivity implements Activity
                     .setPositiveButton(android.R.string.yes,
                             new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface arg0, int arg1) {
-                                    RealmDataControl.getInstance(context).clearRealm();
+//                                    RealmDataControl.getInstance(context).clearRealm();
                                     finish();
                                 }
                             }).create().show();

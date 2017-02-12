@@ -8,12 +8,14 @@ import java.util.List;
 
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
+import io.realm.RealmResults;
 import io.realm.log.RealmLog;
 import xyz.girudo.jetset.R;
 import xyz.girudo.jetset.entities.HomeMenu;
 import xyz.girudo.jetset.entities.LeftMenu;
 import xyz.girudo.jetset.entities.LeftMenuHeader;
 import xyz.girudo.jetset.entities.Offer;
+import xyz.girudo.jetset.entities.User;
 
 /**
  * Created by Novyandi Nurahmad on 11/20/16
@@ -28,10 +30,9 @@ public class RealmDataControl {
     private RealmDataControl(Context context) {
         this.context = context;
         initRealm();
-        clearRealm();
     }
 
-    public static  RealmDataControl getInstance(Context context) {
+    public static RealmDataControl getInstance(Context context) {
         if (realmDataControl == null)
             realmDataControl = new RealmDataControl(context);
         return realmDataControl;
@@ -85,6 +86,7 @@ public class RealmDataControl {
             setLeftMenuItemData();
             setOfferData();
             setHomeMenuData();
+            setUserData();
             return true;
         } catch (Exception e) {
             e.printStackTrace();
@@ -94,6 +96,7 @@ public class RealmDataControl {
 
     private void setLeftMenuItemData() {
         int[] menuTitle = new int[]{
+                R.string.ls_txt_departement,
                 R.string.ls_txt_newArrivals,
                 R.string.ls_txt_mens,
                 R.string.ls_txt_womens,
@@ -120,7 +123,7 @@ public class RealmDataControl {
 
     private void setLeftMenuHeaderData() {
         LeftMenuHeader leftMenuHeader = new LeftMenuHeader();
-        leftMenuHeader.setImage("http://lorempixel.com/100/100/people/1");
+        leftMenuHeader.setImage("http://lorempixel.com/200/200/people/1");
         leftMenuHeader.setName("Alvyan Damharun");
 
         realm.beginTransaction();
@@ -170,5 +173,37 @@ public class RealmDataControl {
 
     public List<HomeMenu> getHomeMenuData() {
         return realm.where(HomeMenu.class).findAll();
+    }
+
+    private User setUserData() {
+        User user = getUserData();
+        if (user == null) {
+            user = new User();
+            user.setFirstName("Alvyan");
+            user.setLastName("Damharun");
+            user.setCity("Bandung");
+            user.setState("Indonesia");
+            user.setZip("11523");
+
+            realm.beginTransaction();
+            realm.copyToRealm(user);
+            realm.commitTransaction();
+        }
+        return user;
+    }
+
+    public void saveUserData(User user) {
+        realm.beginTransaction();
+        realm.delete(User.class);
+        realm.copyToRealm(user);
+        realm.commitTransaction();
+    }
+
+    public User getUserData() {
+        RealmResults<User> users = realm.where(User.class).findAll();
+        if (users.size() > 0)
+            return users.last();
+        else
+            return null;
     }
 }
