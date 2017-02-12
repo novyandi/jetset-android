@@ -23,11 +23,12 @@ import xyz.girudo.jetset.customviews.BaseSwipeRefreshLayout;
 import xyz.girudo.jetset.entities.HomeMenu;
 import xyz.girudo.jetset.helpers.AlertHelper;
 import xyz.girudo.jetset.holders.TypeHolder;
+import xyz.girudo.jetset.interfaces.OnItemClickListener;
 
 /**
  * Created by Novyandi Nurahmad on 11/20/16
  */
-public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener {
+public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener, OnItemClickListener {
     @BindView(R.id.fh_swipe_layout)
     BaseSwipeRefreshLayout swipeRefresh;
     @BindView(R.id.fh_animator)
@@ -44,6 +45,7 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
         homeMenus = new ArrayList<>();
         homeMenuPagerAdapter = new HomeMenuPagerAdapter(activity, true, false, this);
         homeMenuPagerAdapter.setData(homeMenus);
+        getBaseActivity().setColorActionBar(0);
     }
 
     @Override

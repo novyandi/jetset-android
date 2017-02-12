@@ -16,9 +16,8 @@ import xyz.girudo.jetset.R;
 import xyz.girudo.jetset.activities.BaseActivity;
 import xyz.girudo.jetset.helpers.PictureHelper;
 import xyz.girudo.jetset.interfaces.FragmentInterface;
-import xyz.girudo.jetset.interfaces.OnItemClickListener;
 
-public abstract class BaseFragment extends Fragment implements FragmentInterface, OnItemClickListener {
+public abstract class BaseFragment extends Fragment implements FragmentInterface {
     public static final String FRAGMENT = "fragment";
     protected Activity activity;
     protected LayoutInflater inflater;

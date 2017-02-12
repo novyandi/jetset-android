@@ -38,4 +38,20 @@
     <string name="home_txt_mens">Mens</string>
     <string name="home_txt_womens">Womens</string>
     <string name="home_txt_kids">Kids</string>
+
+    <!--Fragment Account-->
+    <string name="acc_title">Account Info</string>
+    <string name="acc_txt_btn_process">Process Your Order</string>
+    <string name="acc_txt_title_name">Your Name</string>
+    <string name="acc_txt_hint_first">First</string>
+    <string name="acc_txt_hint_last">Last</string>
+    <string name="acc_txt_hint_cc">Credit Card Number</string>
+    <string name="acc_txt_hint_ccv">CCV</string>
+    <string name="acc_txt_title_exp_date">Expiration Date</string>
+    <string name="acc_txt_status_shipping">Shipping Address same as Billing Address</string>
+    <string name="acc_txt_hint_address_1">Address Line One</string>
+    <string name="acc_txt_hint_address_2">Address Line Two</string>
+    <string name="acc_txt_hint_city">City</string>
+    <string name="acc_txt_hint_state">State</string>
+    <string name="acc_txt_hint_zip">Zip</string>
 </resources>

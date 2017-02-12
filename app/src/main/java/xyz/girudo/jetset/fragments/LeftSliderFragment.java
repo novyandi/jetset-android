@@ -1,18 +1,17 @@
 package xyz.girudo.jetset.fragments;
 
 import android.app.AlertDialog;
-import android.app.FragmentManager;
 import android.content.DialogInterface;
-import android.graphics.Typeface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,13 +21,13 @@ import butterknife.ButterKnife;
 import io.realm.RealmObject;
 import xyz.girudo.jetset.R;
 import xyz.girudo.jetset.activities.MainActivity;
+import xyz.girudo.jetset.activities.SplashScreenActivity;
 import xyz.girudo.jetset.adapters.LeftMenuAdapter;
 import xyz.girudo.jetset.controllers.JetsetApp;
 import xyz.girudo.jetset.controllers.Preferences;
 import xyz.girudo.jetset.controllers.RealmDataControl;
 import xyz.girudo.jetset.entities.LeftMenu;
 import xyz.girudo.jetset.helpers.AlertHelper;
-import xyz.girudo.jetset.helpers.PictureHelper;
 import xyz.girudo.jetset.holders.TypeHolder;
 import xyz.girudo.jetset.interfaces.OnItemClickListener;
 
@@ -42,8 +41,6 @@ public class LeftSliderFragment extends BaseFragment implements OnItemClickListe
     private LeftMenuAdapter leftMenuAdapter;
     private List<LeftMenu> leftMenus;
     private boolean closedDrawer = true;
-    private View selectedView;
-    private int selectedPosition;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -52,6 +49,8 @@ public class LeftSliderFragment extends BaseFragment implements OnItemClickListe
         leftMenuAdapter = new LeftMenuAdapter(activity, true, false, this);
         leftMenus.addAll(RealmDataControl.getInstance(activity).getLeftMenuItemData());
         leftMenuAdapter.setData(leftMenus);
+        leftMenuAdapter.setSingleSelection(true);
+        leftMenuAdapter.toggleSelection(1);
     }
 
     @Override
@@ -85,7 +84,8 @@ public class LeftSliderFragment extends BaseFragment implements OnItemClickListe
     @Override
     public void onItemClickListener(View parent, View view, int viewTypeHolder, int position, RealmObject item) {
         BaseFragment fragment = null;
-        if (position != selectedPosition) {
+        if (position != leftMenuAdapter.getLastSelectionPosition()) {
+            leftMenuAdapter.toggleSelection(position);
             if (viewTypeHolder == TypeHolder.TYPE_ITEM) {
                 AlertHelper.getInstance().showAlert(activity, "show " + ((LeftMenu) item).getTitle());
                 switch (position) {
@@ -93,7 +93,7 @@ public class LeftSliderFragment extends BaseFragment implements OnItemClickListe
 //                fragment = new HomeFragment();
 //                break;
                     case 1:
-//                fragment = new StoreCategoryFragment();
+                        fragment = new HomeFragment();
                         break;
                     case 2:
 //                fragment = new PromotionFragment();
@@ -108,15 +108,18 @@ public class LeftSliderFragment extends BaseFragment implements OnItemClickListe
 //                fragment = new SurveysFragment();
                         break;
                     case 6:
-//                fragment = new SurveysFragment();
+//                fragment = new AccountFragment();
                         break;
                     case 7:
-//                fragment = new SurveysFragment();
+                        fragment = new AccountFragment();
                         break;
                     case 8:
 //                fragment = new SurveysFragment();
                         break;
                     case 9:
+//                fragment = new SurveysFragment();
+                        break;
+                    case 10:
                         new AlertDialog.Builder(activity)
                                 .setMessage(getString(R.string.info_logout))
                                 .setNegativeButton(android.R.string.no, null)
@@ -126,53 +129,18 @@ public class LeftSliderFragment extends BaseFragment implements OnItemClickListe
                                                 JetsetApp.getSession(activity).setToken("");
                                                 JetsetApp.setConfig(activity, JetsetApp.TOKEN_KEY, "");
                                                 JetsetApp.setConfig(activity, Preferences.USER_LOGIN, "N");
-                                                activity.finish();
-//                                        getBaseActivity().changeActivity(LoginActivity.class, true, null, Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                                                JetsetApp.removeConfig(activity, Preferences.FIRST_START);
+                                                RealmDataControl.getInstance(activity).clearRealm();
+                                                getBaseActivity().changeActivity(SplashScreenActivity.class, true, null, Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                                             }
                                         }).create().show();
                         break;
                     default:
                         break;
                 }
-                setActiveItemMenu(view);
             }
         }
-        selectedPosition = position;
         changeFragment(fragment);
-    }
-
-    private void setActiveItemMenu(View view) {
-        view.setSelected(true);
-        TextView textTitle = (TextView) view.findViewById(R.id.title);
-        int paddingSelected = PictureHelper.getInstance(activity, this).sizeInDp(5);
-        if (textTitle != null) {
-            textTitle.setTypeface(textTitle.getTypeface(), Typeface.BOLD);
-            textTitle.setPadding(
-                    textTitle.getPaddingLeft() + paddingSelected,
-                    textTitle.getPaddingTop(),
-                    textTitle.getPaddingRight(),
-                    textTitle.getPaddingBottom())
-            ;
-        }
-        View selector = view.findViewById(R.id.selector);
-        if (selector != null) selector.setVisibility(View.VISIBLE);
-
-        if (selectedView != null) {
-            selectedView.setSelected(false);
-            textTitle = (TextView) selectedView.findViewById(R.id.title);
-            if (textTitle != null) {
-                textTitle.setTypeface(Typeface.create(textTitle.getTypeface(), Typeface.NORMAL), Typeface.NORMAL);
-                textTitle.setPadding(
-                        textTitle.getPaddingLeft() - paddingSelected,
-                        textTitle.getPaddingTop(),
-                        textTitle.getPaddingRight(),
-                        textTitle.getPaddingBottom())
-                ;
-            }
-            selector = selectedView.findViewById(R.id.selector);
-            if (selector != null) selector.setVisibility(View.GONE);
-        }
-        selectedView = view;
     }
 
     private void changeFragment(final BaseFragment fragment) {
@@ -184,7 +152,7 @@ public class LeftSliderFragment extends BaseFragment implements OnItemClickListe
                 @Override
                 public void run() {
                     getFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
-                    replaceFragment(R.id.am_fragment_container, fragment, !(fragment instanceof HomeFragment));
+                    replaceFragment(R.id.am_fragment_container, fragment, false);
                 }
             }, 300);
         }

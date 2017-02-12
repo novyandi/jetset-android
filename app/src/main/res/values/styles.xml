@@ -6,9 +6,9 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimary</item>
         <item name="colorAccent">@color/colorAccent</item>
-        <item name="colorControlNormal">@android:color/transparent</item>
-        <item name="colorControlActivated">@color/text_active</item>
-        <item name="colorControlHighlight">@android:color/transparent</item>
+        <item name="colorControlNormal">@color/text_inactive</item>
+        <item name="colorControlActivated">@color/colorAccentSelect</item>
+        <item name="colorControlHighlight">@color/colorAccentSelect</item>
         <item name="vpiCirclePageIndicatorStyle">@style/CustomCirclePageIndicator</item>
         <item name="vpiLinePageIndicatorStyle">@style/CustomLinePageIndicator</item>
         <item name="vpiTitlePageIndicatorStyle">@style/CustomTitlePageIndicator</item>
