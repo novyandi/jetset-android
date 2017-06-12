@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="subtitle_list" translatable="false">
+        <item>Mens</item>
+        <item>Womens</item>
+        <item>Kids</item>
+    </string-array>
+</resources>

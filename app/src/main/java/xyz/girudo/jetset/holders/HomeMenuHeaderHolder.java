@@ -16,7 +16,6 @@ import butterknife.BindView;
 import xyz.girudo.jetset.R;
 import xyz.girudo.jetset.adapters.NewestOfferPagerAdapter;
 import xyz.girudo.jetset.controllers.RealmDataControl;
-import xyz.girudo.jetset.entities.HomeMenu;
 import xyz.girudo.jetset.entities.Offer;
 import xyz.girudo.jetset.interfaces.OnItemClickListener;
 
@@ -24,7 +23,7 @@ import xyz.girudo.jetset.interfaces.OnItemClickListener;
  * Created by Novyandi Nurahmad on 11/21/16
  */
 
-public class HomeMenuHeaderHolder extends BaseHolder<HomeMenu> {
+public class HomeMenuHeaderHolder extends BaseHolder {
     public static final int OFFSCREEN_PAGE_LIMIT = 3;
     @BindView(R.id.am_pager_data)
     ViewPager dataPager;

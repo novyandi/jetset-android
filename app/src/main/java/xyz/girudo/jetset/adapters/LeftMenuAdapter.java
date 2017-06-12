@@ -44,7 +44,7 @@ public class LeftMenuAdapter extends SelectableAdapter<LeftMenu, LeftMenuHeader,
             LeftMenu item = getItem(position);
             LeftMenuItemHolder leftMenuItemHolder = (LeftMenuItemHolder) holder;
             leftMenuItemHolder.setData(item);
-            leftMenuItemHolder.setShowSeparator(position == 4 || position == 6 || position == 8);
+            leftMenuItemHolder.setShowSeparator(position == 5 || position == 7 || position == 9);
             initSelectedItemMenu(leftMenuItemHolder, item, isSelected(position));
         } else if (holder != null && holder instanceof LeftMenuHeaderHolder) {
             LeftMenuHeader leftMenuHeaderData = RealmDataControl.getInstance(context).getLeftMenuHeaderData();

@@ -30,7 +30,6 @@ public class HomeMenuPagerAdapter extends BaseAdapter<HomeMenu, RealmObject, Rea
             return new HomeMenuHeaderHolder(context, LayoutInflater.from(context).inflate(R.layout.list_header_home_menu, parent, false), onItemClickListener);
         else
             return new HomeMenuItemHolder(context, LayoutInflater.from(context).inflate(R.layout.list_item_home_menu, parent, false), onItemClickListener);
-
     }
 
     @Override

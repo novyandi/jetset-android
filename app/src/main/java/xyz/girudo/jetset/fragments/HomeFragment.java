@@ -10,6 +10,8 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.ViewAnimator;
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,9 +22,8 @@ import xyz.girudo.jetset.R;
 import xyz.girudo.jetset.adapters.HomeMenuPagerAdapter;
 import xyz.girudo.jetset.controllers.RealmDataControl;
 import xyz.girudo.jetset.customviews.BaseSwipeRefreshLayout;
+import xyz.girudo.jetset.entities.Events.OnSelectLeftMenu;
 import xyz.girudo.jetset.entities.HomeMenu;
-import xyz.girudo.jetset.helpers.AlertHelper;
-import xyz.girudo.jetset.holders.TypeHolder;
 import xyz.girudo.jetset.interfaces.OnItemClickListener;
 
 /**
@@ -51,10 +52,10 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
     @Override
     public void initView(View view) {
         ButterKnife.bind(this, view);
+        activity.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         homeList.setItemAnimator(new DefaultItemAnimator());
         homeList.setLayoutManager(new LinearLayoutManager(activity));
         homeList.setAdapter(homeMenuPagerAdapter);
-        activity.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
     }
 
     @Override
@@ -80,8 +81,22 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
 
     @Override
     public void onItemClickListener(View parent, View view, int viewTypeHolder, int position, RealmObject item) {
-        if (viewTypeHolder == TypeHolder.TYPE_ITEM)
-            AlertHelper.getInstance().showAlert(activity, "Show " + ((HomeMenu) item).getTitle());
+        switch (position) {
+            case 1:
+                EventBus.getDefault().post(new OnSelectLeftMenu(2));
+                break;
+            case 2:
+                EventBus.getDefault().post(new OnSelectLeftMenu(3));
+                break;
+            case 3:
+                EventBus.getDefault().post(new OnSelectLeftMenu(4));
+                break;
+            case 4:
+                EventBus.getDefault().post(new OnSelectLeftMenu(5));
+                break;
+            default:
+                break;
+        }
     }
 
     @Override

@@ -71,9 +71,9 @@ public abstract class BaseAdapter<V extends RealmObject, W extends RealmObject, 
 
     @Override
     public int getItemViewType(int position) {
-        if (position == 0)
+        if (position == 0 && withHeader)
             return TypeHolder.TYPE_HEADER;
-        else if (position == getItemCount() + 1)
+        else if (position == getItemCount() + 1 && withFooter)
             return TypeHolder.TYPE_FOOTER;
         else
             return TypeHolder.TYPE_ITEM;
