@@ -84,6 +84,10 @@ public class MainActivity extends BaseActivity {
 
     }
 
+    public boolean isDrawerOpen(int gravity){
+        return drawerLayout.isDrawerOpen(gravity);
+    }
+
     public void toggleDrawer(int gravity) {
         if (drawerLayout.isDrawerOpen(gravity)) {
             drawerLayout.closeDrawer(gravity);

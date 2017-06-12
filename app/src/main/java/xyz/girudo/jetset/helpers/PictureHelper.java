@@ -188,7 +188,7 @@ public class PictureHelper {
         Glide.with(ctx)
                 .load(url)
                 .fitCenter()
-                .diskCacheStrategy(DiskCacheStrategy.SOURCE)
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .thumbnail(0.1f)
                 .into(imageView);
     }

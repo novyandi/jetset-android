@@ -13,6 +13,9 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,6 +29,7 @@ import xyz.girudo.jetset.adapters.LeftMenuAdapter;
 import xyz.girudo.jetset.controllers.JetsetApp;
 import xyz.girudo.jetset.controllers.Preferences;
 import xyz.girudo.jetset.controllers.RealmDataControl;
+import xyz.girudo.jetset.entities.Events.OnSelectLeftMenu;
 import xyz.girudo.jetset.entities.LeftMenu;
 import xyz.girudo.jetset.helpers.AlertHelper;
 import xyz.girudo.jetset.holders.TypeHolder;
@@ -40,11 +44,11 @@ public class LeftSliderFragment extends BaseFragment implements OnItemClickListe
     RecyclerView lvLeftMenu;
     private LeftMenuAdapter leftMenuAdapter;
     private List<LeftMenu> leftMenus;
-    private boolean closedDrawer = true;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        EventBus.getDefault().register(this);
         leftMenus = new ArrayList<>();
         leftMenuAdapter = new LeftMenuAdapter(activity, true, false, this);
         leftMenus.addAll(RealmDataControl.getInstance(activity).getLeftMenuItemData());
@@ -83,72 +87,82 @@ public class LeftSliderFragment extends BaseFragment implements OnItemClickListe
 
     @Override
     public void onItemClickListener(View parent, View view, int viewTypeHolder, int position, RealmObject item) {
-        BaseFragment fragment = null;
         if (position != leftMenuAdapter.getLastSelectionPosition()) {
             leftMenuAdapter.toggleSelection(position);
             if (viewTypeHolder == TypeHolder.TYPE_ITEM) {
                 AlertHelper.getInstance().showAlert(activity, "show " + ((LeftMenu) item).getTitle());
-                switch (position) {
-//            case 0:
-//                fragment = new HomeFragment();
-//                break;
-                    case 1:
-                        fragment = new HomeFragment();
-                        break;
-                    case 2:
-//                fragment = new PromotionFragment();
-                        break;
-                    case 3:
-//                fragment = new EventListFragment();
-                        break;
-                    case 4:
-//                fragment = new SurveysFragment();
-                        break;
-                    case 5:
-//                fragment = new SurveysFragment();
-                        break;
-                    case 6:
-//                fragment = new AccountFragment();
-                        break;
-                    case 7:
-                        fragment = new AccountFragment();
-                        break;
-                    case 8:
-//                fragment = new SurveysFragment();
-                        break;
-                    case 9:
-//                fragment = new SurveysFragment();
-                        break;
-                    case 10:
-                        new AlertDialog.Builder(activity)
-                                .setMessage(getString(R.string.info_logout))
-                                .setNegativeButton(android.R.string.no, null)
-                                .setPositiveButton(android.R.string.yes,
-                                        new DialogInterface.OnClickListener() {
-                                            public void onClick(DialogInterface arg0, int arg1) {
-                                                JetsetApp.getSession(activity).setToken("");
-                                                JetsetApp.setConfig(activity, JetsetApp.TOKEN_KEY, "");
-                                                JetsetApp.setConfig(activity, Preferences.USER_LOGIN, "N");
-                                                JetsetApp.removeConfig(activity, Preferences.FIRST_START);
-                                                RealmDataControl.getInstance(activity).clearRealm();
-                                                getBaseActivity().changeActivity(SplashScreenActivity.class, true, null, Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                                            }
-                                        }).create().show();
-                        break;
-                    default:
-                        break;
-                }
+                changeFragment(getSelectionFragment(position));
             }
         }
-        changeFragment(fragment);
+    }
+
+    private BaseFragment getSelectionFragment(int position) {
+        BaseFragment fragment = null;
+        Bundle bundle = new Bundle();
+        switch (position) {
+            case 0:
+//                fragment = new HomeFragment();
+                break;
+            case 1:
+                fragment = new HomeFragment();
+                break;
+            case 2:
+                fragment = new ArrivalFragment();
+                break;
+            case 3:
+                fragment = new ArrivalFragment();
+                bundle.putInt(ArrivalFragment.SUBCATEGORY, 0);
+                break;
+            case 4:
+                fragment = new ArrivalFragment();
+                bundle.putInt(ArrivalFragment.SUBCATEGORY, 1);
+                break;
+            case 5:
+                fragment = new ArrivalFragment();
+                bundle.putInt(ArrivalFragment.SUBCATEGORY, 2);
+                break;
+            case 6:
+//                fragment = new AccountFragment();
+                break;
+            case 7:
+                fragment = new AccountFragment();
+                break;
+            case 8:
+//                fragment = new SurveysFragment();
+                break;
+            case 9:
+//                fragment = new SurveysFragment();
+                break;
+            case 10:
+                new AlertDialog.Builder(activity)
+                        .setMessage(getString(R.string.info_logout))
+                        .setNegativeButton(android.R.string.no, null)
+                        .setPositiveButton(android.R.string.yes,
+                                new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface arg0, int arg1) {
+                                        JetsetApp.getSession(activity).setToken("");
+                                        JetsetApp.setConfig(activity, JetsetApp.TOKEN_KEY, "");
+                                        JetsetApp.setConfig(activity, Preferences.USER_LOGIN, "N");
+                                        JetsetApp.removeConfig(activity, Preferences.FIRST_START);
+                                        RealmDataControl.getInstance(activity).clearRealm();
+                                        getBaseActivity().changeActivity(SplashScreenActivity.class, true, null, Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                                    }
+                                }).create().show();
+                break;
+            default:
+                break;
+        }
+        if (fragment != null) fragment.setArguments(bundle);
+        return fragment;
     }
 
     private void changeFragment(final BaseFragment fragment) {
-        if (closedDrawer) ((MainActivity) activity).toggleDrawer(Gravity.START);
-        closedDrawer = true;
+        MainActivity mainActivity = (MainActivity) this.activity;
+        if (mainActivity.isDrawerOpen(Gravity.START))
+            mainActivity.toggleDrawer(Gravity.START);
         if (fragment != null) {
             getBaseActivity().setDefaultActionbarIcon();
-            new Handler(activity.getMainLooper()).postDelayed(new Runnable() {
+            new Handler(this.activity.getMainLooper()).postDelayed(new Runnable() {
                 @Override
                 public void run() {
                     getFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
@@ -156,5 +170,17 @@ public class LeftSliderFragment extends BaseFragment implements OnItemClickListe
                 }
             }, 300);
         }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
+    }
+
+    @Subscribe
+    public void onSelectMenu(OnSelectLeftMenu onSelectLeftMenu) {
+        leftMenuAdapter.toggleSelection(onSelectLeftMenu.getPosition());
+        changeFragment(getSelectionFragment(onSelectLeftMenu.getPosition()));
     }
 }

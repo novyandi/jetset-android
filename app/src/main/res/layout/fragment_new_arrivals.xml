@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:id="@+id/header_arrival"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/max_height_header">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_above="@+id/selection_header"
+                android:background="@color/bluish_green"
+                android:contentDescription="@string/app_name"
+                android:padding="5dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/selection_header"
+                android:layout_alignParentTop="true"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="LAST CHANGE"
+                    android:textColor="@color/white"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="SALE"
+                    android:textColor="@color/white"
+                    android:textSize="74sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="UP TO 70 % OFF"
+                    android:textColor="@color/white"
+                    android:textSize="30sp" />
+            </LinearLayout>
+
+            <RelativeLayout
+                android:id="@+id/selection_header"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/selection_height_header"
+                android:layout_alignParentBottom="true"
+                android:background="@color/btn_normal"
+                android:gravity="center_vertical"
+                android:paddingBottom="5dp"
+                android:paddingLeft="30dp"
+                android:paddingRight="30dp"
+                android:paddingTop="5dp">
+
+                <android.support.v7.widget.AppCompatSpinner
+                    android:id="@+id/sp_subtitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_centerVertical="true"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="5dp"
+                    android:gravity="center"
+                    android:imeOptions="actionNext"
+                    android:spinnerMode="dropdown" />
+            </RelativeLayout>
+        </RelativeLayout>
+
+        <xyz.girudo.jetset.customviews.BaseSwipeRefreshLayout
+            android:id="@+id/fh_swipe_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ViewAnimator
+                android:id="@+id/fh_animator"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ProgressBar
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center" />
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/fh_arrivallist"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/colorPrimary"
+                    android:divider="@color/text_inactive"
+                    android:dividerHeight="1dp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:text="@string/home_no_data"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="@color/cyan_dark" />
+            </ViewAnimator>
+        </xyz.girudo.jetset.customviews.BaseSwipeRefreshLayout>
+    </LinearLayout>
+</android.support.design.widget.CoordinatorLayout>

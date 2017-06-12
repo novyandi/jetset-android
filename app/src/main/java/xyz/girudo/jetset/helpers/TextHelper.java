@@ -7,6 +7,9 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+
 public class TextHelper {
     private static final String FONT_TYPE = "fonts/robotoregular.ttf";
     private static TextHelper textHelper;
@@ -40,5 +43,10 @@ public class TextHelper {
             buf.append(" ...");
         }
         return buf.toString();
+    }
+
+    public String setCurrencyText(double value) {
+        NumberFormat formatter = new DecimalFormat("'$'###");
+        return formatter.format(value);
     }
 }

@@ -11,6 +11,7 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.annotation.NonNull;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -41,95 +42,7 @@ public class SplashScreenActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            final List<String> permissionsNeeded = new ArrayList<String>();
-            final List<String> permissionsList = new ArrayList<String>();
-            if (!addPermission(permissionsList, Manifest.permission.WRITE_EXTERNAL_STORAGE))
-                permissionsNeeded.add(getString(R.string.sp_storage));
-            if (!addPermission(permissionsList, Manifest.permission.GET_ACCOUNTS))
-                permissionsNeeded.add(getString(R.string.sp_contacts));
-            if (permissionsList.size() > 0) {
-                if (permissionsNeeded.size() > 0) {
-                    // Need Rationale
-                    String message = getString(R.string.sp_access_message) + " " + permissionsNeeded.get(0);
-                    for (int i = 1; i < permissionsNeeded.size(); i++)
-                        message = message + ", " + permissionsNeeded.get(i);
-                    final String AppName = getResources().getString(R.string.app_name);
-                    AlertDialog.Builder permissionRequest = AlertHelper.getInstance().showAlertWithoutListener(this, AppName, message);
-                    permissionRequest.setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            String message = String.format(getString(R.string.sp_cancel_info), AppName, getString(R.string.sp_contacts), getString(R.string.sp_storage));
-                            showPermissionDialog(SplashScreenActivity.this, AppName, message, new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int which) {
-                                    finish();
-                                }
-                            });
-                        }
-                    });
-                    permissionRequest.setPositiveButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
-                        @TargetApi(Build.VERSION_CODES.M)
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            requestPermissions(permissionsList.toArray(new String[permissionsList.size()]), REQUEST_MULTIPLE_PERMISSION);
-                        }
-                    });
-                    permissionRequest.setCancelable(false);
-                    permissionRequest.show();
-                    return;
-                }
-                requestPermissions(permissionsList.toArray(new String[permissionsList.size()]), REQUEST_MULTIPLE_PERMISSION);
-                return;
-            }
-        }
         initFirst();
-    }
-
-    private void showPermissionDialog(Context context, String title, String message, DialogInterface.OnClickListener onClickListener) {
-        AlertDialog.Builder permissionInfo = AlertHelper.getInstance().showAlertWithoutListener(context, title, message);
-        permissionInfo.setCancelable(false);
-        permissionInfo.setPositiveButton(getString(R.string.ok), onClickListener);
-        permissionInfo.show();
-    }
-
-    @TargetApi(Build.VERSION_CODES.M)
-    private boolean addPermission(List<String> permissionsList, String permission) {
-        if (checkSelfPermission(permission) != PackageManager.PERMISSION_GRANTED) {
-            permissionsList.add(permission);
-            // Check for Rationale Option
-            if (!shouldShowRequestPermissionRationale(permission))
-                return false;
-        }
-        return true;
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
-        if (requestCode == REQUEST_MULTIPLE_PERMISSION) {
-            Map<String, Integer> perms = new HashMap<String, Integer>();
-            // Initial
-            perms.put(Manifest.permission.GET_ACCOUNTS, PackageManager.PERMISSION_GRANTED);
-            perms.put(Manifest.permission.WRITE_EXTERNAL_STORAGE, PackageManager.PERMISSION_GRANTED);
-            // Fill with results
-            for (int i = 0; i < permissions.length; i++)
-                perms.put(permissions[i], grantResults[i]);
-            // Check for ACCESS_FINE_LOCATION
-            if (perms.get(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED
-                    && perms.get(Manifest.permission.GET_ACCOUNTS) == PackageManager.PERMISSION_GRANTED) {
-                // All Permissions Granted
-                initFirst();
-            } else {
-                // Permission Denied
-                Toast.makeText(this, getString(R.string.sp_info_denied), Toast.LENGTH_SHORT).show();
-                final String AppName = getResources().getString(R.string.app_name);
-                String message = String.format(getString(R.string.sp_cancel_info), AppName, getString(R.string.sp_contacts), getString(R.string.sp_storage));
-                showPermissionDialog(this, AppName, message, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        finish();
-                    }
-                });
-            }
-        }
     }
 
     private void initFirst() {
@@ -138,6 +51,7 @@ public class SplashScreenActivity extends Activity {
         imageLogo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (checkPermissions()) return;
                 goNextActivity();
             }
         });
@@ -170,6 +84,98 @@ public class SplashScreenActivity extends Activity {
                 finish();
             }
         });
+    }
+
+    private boolean checkPermissions() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            final List<String> permissionsNeeded = new ArrayList<>();
+            final List<String> permissionsList = new ArrayList<>();
+            if (!addPermission(permissionsList, Manifest.permission.WRITE_EXTERNAL_STORAGE))
+                permissionsNeeded.add(getString(R.string.sp_storage));
+            if (!addPermission(permissionsList, Manifest.permission.GET_ACCOUNTS))
+                permissionsNeeded.add(getString(R.string.sp_contacts));
+            if (permissionsList.size() > 0) {
+                if (permissionsNeeded.size() > 0) {
+                    // Need Rationale
+                    String message = getString(R.string.sp_access_message) + " " + permissionsNeeded.get(0);
+                    for (int i = 1; i < permissionsNeeded.size(); i++)
+                        message = message + ", " + permissionsNeeded.get(i);
+                    final String AppName = getResources().getString(R.string.app_name);
+                    AlertDialog.Builder permissionRequest = AlertHelper.getInstance().showAlertWithoutListener(this, AppName, message);
+                    permissionRequest.setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            String message = String.format(getString(R.string.sp_cancel_info), AppName, getString(R.string.sp_contacts), getString(R.string.sp_storage));
+                            showPermissionDialog(SplashScreenActivity.this, AppName, message, new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    finish();
+                                }
+                            });
+                        }
+                    });
+                    permissionRequest.setPositiveButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
+                        @TargetApi(Build.VERSION_CODES.M)
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            requestPermissions(permissionsList.toArray(new String[permissionsList.size()]), REQUEST_MULTIPLE_PERMISSION);
+                        }
+                    });
+                    permissionRequest.setCancelable(false);
+                    permissionRequest.show();
+                    return true;
+                }
+                requestPermissions(permissionsList.toArray(new String[permissionsList.size()]), REQUEST_MULTIPLE_PERMISSION);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private void showPermissionDialog(Context context, String title, String message, DialogInterface.OnClickListener onClickListener) {
+        AlertDialog.Builder permissionInfo = AlertHelper.getInstance().showAlertWithoutListener(context, title, message);
+        permissionInfo.setCancelable(false);
+        permissionInfo.setPositiveButton(getString(R.string.ok), onClickListener);
+        permissionInfo.show();
+    }
+
+    @TargetApi(Build.VERSION_CODES.M)
+    private boolean addPermission(List<String> permissionsList, String permission) {
+        if (checkSelfPermission(permission) != PackageManager.PERMISSION_GRANTED) {
+            permissionsList.add(permission);
+            // Check for Rationale Option
+            if (!shouldShowRequestPermissionRationale(permission))
+                return false;
+        }
+        return true;
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String permissions[], @NonNull int[] grantResults) {
+        if (requestCode == REQUEST_MULTIPLE_PERMISSION) {
+            Map<String, Integer> perms = new HashMap<>();
+            // Initial
+            perms.put(Manifest.permission.GET_ACCOUNTS, PackageManager.PERMISSION_GRANTED);
+            perms.put(Manifest.permission.WRITE_EXTERNAL_STORAGE, PackageManager.PERMISSION_GRANTED);
+            // Fill with results
+            for (int i = 0; i < permissions.length; i++)
+                perms.put(permissions[i], grantResults[i]);
+            // Check for ACCESS_FINE_LOCATION
+            if (perms.get(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED
+                    && perms.get(Manifest.permission.GET_ACCOUNTS) == PackageManager.PERMISSION_GRANTED) {
+                // All Permissions Granted
+                goNextActivity();
+            } else {
+                // Permission Denied
+                Toast.makeText(this, getString(R.string.sp_info_denied), Toast.LENGTH_SHORT).show();
+                final String AppName = getResources().getString(R.string.app_name);
+                String message = String.format(getString(R.string.sp_cancel_info), AppName, getString(R.string.sp_contacts), getString(R.string.sp_storage));
+                showPermissionDialog(this, AppName, message, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        finish();
+                    }
+                });
+            }
+        }
     }
 
     @Override
