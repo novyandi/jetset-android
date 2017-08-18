@@ -1,5 +1,6 @@
 package xyz.girudo.jetset.entities;
 
+import io.realm.RealmList;
 import io.realm.RealmObject;
 
 /**
@@ -8,10 +9,22 @@ import io.realm.RealmObject;
 
 public class ItemSell extends RealmObject {
     public static final String TYPE = "type";
+    private int id;
     private String title;
-    private String image;
+    private RealmList<StringObject> images;
     private int type;
     private double price;
+    private String size;
+    private String color;
+    private String description;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getTitle() {
         return title;
@@ -21,12 +34,12 @@ public class ItemSell extends RealmObject {
         this.title = title;
     }
 
-    public String getImage() {
-        return image;
+    public RealmList<StringObject> getImages() {
+        return images;
     }
 
-    public void setImage(String image) {
-        this.image = image;
+    public void setImages(RealmList<StringObject> images) {
+        this.images = images;
     }
 
     public int getType() {
@@ -43,5 +56,29 @@ public class ItemSell extends RealmObject {
 
     public void setPrice(double price) {
         this.price = price;
+    }
+
+    public String getSize() {
+        return size;
+    }
+
+    public void setSize(String size) {
+        this.size = size;
+    }
+
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

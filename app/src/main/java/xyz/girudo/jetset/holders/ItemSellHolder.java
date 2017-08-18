@@ -31,7 +31,7 @@ public class ItemSellHolder extends BaseHolder<ItemSell> {
     @Override
     public void setData(ItemSell entity) {
         super.setData(entity);
-        PictureHelper.getInstance(context).loadImage(entity.getImage(), itemImage, R.drawable.logo);
+        PictureHelper.getInstance(context).loadImage(entity.getImages().get(0).getString(), itemImage, R.drawable.logo);
         itemTitle.setText(entity.getTitle());
         itemPrice.setText(TextHelper.getInstance(context).setCurrencyText(entity.getPrice()));
     }

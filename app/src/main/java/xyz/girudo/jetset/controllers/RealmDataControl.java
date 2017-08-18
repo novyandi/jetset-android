@@ -9,6 +9,7 @@ import java.util.Random;
 
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
+import io.realm.RealmList;
 import io.realm.RealmResults;
 import io.realm.log.RealmLog;
 import xyz.girudo.jetset.R;
@@ -17,6 +18,7 @@ import xyz.girudo.jetset.entities.ItemSell;
 import xyz.girudo.jetset.entities.LeftMenu;
 import xyz.girudo.jetset.entities.LeftMenuHeader;
 import xyz.girudo.jetset.entities.Offer;
+import xyz.girudo.jetset.entities.StringObject;
 import xyz.girudo.jetset.entities.User;
 
 /**
@@ -194,18 +196,22 @@ public class RealmDataControl {
                 "Green Sequin Dress"};
         int[] typeTitles = new int[]{0, 2, 1, 0, 1, 2, 1, 0, 2, 0, 0, 1};
         List<ItemSell> items = new ArrayList<>();
-        int id = 0;
         Random r = new Random();
         double range = 10000d - 100d;
         for (int i = 0; i < itemTitles.length; i++) {
             ItemSell itemSell = new ItemSell();
-            itemSell.setImage("http://lorempixel.com/400/300/fashion/" + (id + 1));
+            itemSell.setId(i);
+            RealmList<StringObject> images = new RealmList<>();
+            images.add(new StringObject("http://lorempixel.com/400/300/fashion/" + typeTitles[i]));
+            images.add(new StringObject("http://lorempixel.com/400/300/fashion/" + typeTitles[i]));
+            images.add(new StringObject("http://lorempixel.com/400/300/fashion/" + typeTitles[i]));
+            images.add(new StringObject("http://lorempixel.com/400/300/fashion/" + typeTitles[i]));
+            itemSell.setImages(images);
             itemSell.setTitle(itemTitles[i]);
             itemSell.setType(typeTitles[i]);
             double scaled = r.nextDouble() * range;
             itemSell.setPrice(scaled + 100d);
             items.add(itemSell);
-            id++;
         }
         realm.beginTransaction();
         realm.copyToRealm(items);

@@ -6,6 +6,10 @@
     <color name="colorAccentSelect">#2E97DE</color>
     <color name="white">#FFF</color>
     <color name="red">#F81648</color>
+    <color name="gray_bg">#f3f3f3</color>
+    <color name="gray_bg_activ">#8d8d8d</color>
+    <color name="gray_bg_dis">#d8d8d8</color>
+    <color name="gray_bg_slct">#979797</color>
     <color name="gray_dark">#464646</color>
     <color name="gray_light">#e5e5e5</color>
     <color name="gray_light_2">#d5d5d5</color>

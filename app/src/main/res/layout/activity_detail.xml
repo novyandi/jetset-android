@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/gray_bg"
+    android:orientation="vertical">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize"
+        android:layout_alignParentTop="true"
+        android:background="@android:color/transparent"
+        android:minHeight="?attr/actionBarSize" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/btn_add_cart"
+        android:layout_below="@+id/toolbar">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="20dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:gravity="center"
+                android:textSize="22sp"
+                android:textStyle="bold" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <android.support.v4.view.ViewPager
+                    android:id="@+id/images_pager_data"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/max_height_header"
+                    android:background="@color/white" />
+
+                <com.viewpagerindicator.CirclePageIndicator xmlns:app="http://schemas.android.com/apk/res-auto"
+                    android:id="@+id/am_indicator"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@+id/images_pager_data"
+                    android:layout_marginBottom="20dp"
+                    android:padding="10dip"
+                    app:fillColor="@color/white"
+                    app:pageColor="#abaeb1"
+                    app:radius="6dp"
+                    app:strokeColor="@color/white"
+                    app:strokeWidth="0dp" />
+            </RelativeLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="@string/prdct_txt_size" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="53dp"
+                android:orientation="horizontal"
+                android:weightSum="6">
+
+                <CheckedTextView
+                    android:id="@+id/btn_size_XS"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/selectable_background_size"
+                    android:enabled="false"
+                    android:gravity="center"
+                    android:paddingLeft="17dp"
+                    android:tag="XS"
+                    android:text="@string/prdct_txt_size_XS"
+                    android:textColor="@drawable/size_text_selector" />
+
+                <CheckedTextView
+                    android:id="@+id/btn_size_S"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/selectable_background_size"
+                    android:enabled="false"
+                    android:gravity="center"
+                    android:paddingLeft="22dp"
+                    android:tag="S"
+                    android:text="@string/prdct_txt_size_S"
+                    android:textColor="@drawable/size_text_selector" />
+
+                <CheckedTextView
+                    android:id="@+id/btn_size_M"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/selectable_background_size"
+                    android:enabled="false"
+                    android:gravity="center"
+                    android:paddingLeft="20dp"
+                    android:tag="M"
+                    android:text="@string/prdct_txt_size_M"
+                    android:textColor="@drawable/size_text_selector" />
+
+                <CheckedTextView
+                    android:id="@+id/btn_size_L"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/selectable_background_size"
+                    android:enabled="false"
+                    android:gravity="center"
+                    android:paddingLeft="22dp"
+                    android:tag="L"
+                    android:text="@string/prdct_txt_size_L"
+                    android:textColor="@drawable/size_text_selector" />
+
+                <CheckedTextView
+                    android:id="@+id/btn_size_XL"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/selectable_background_size"
+                    android:enabled="false"
+                    android:gravity="center"
+                    android:paddingLeft="18dp"
+                    android:tag="XL"
+                    android:text="@string/prdct_txt_size_XL"
+                    android:textColor="@drawable/size_text_selector" />
+
+                <CheckedTextView
+                    android:id="@+id/btn_size_XXL"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/selectable_background_size"
+                    android:enabled="false"
+                    android:gravity="center"
+                    android:paddingLeft="15dp"
+                    android:tag="XXL"
+                    android:text="@string/prdct_txt_size_XXL"
+                    android:textColor="@drawable/size_text_selector" />
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="@string/prdct_txt_color" />
+
+            <android.support.v7.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/max_height_header"
+                android:layout_marginTop="30dp"
+                android:orientation="vertical">
+
+                <xyz.girudo.jetset.customviews.SlidingTabLayout
+                    android:id="@+id/tab_sliding_detail"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp" />
+
+                <xyz.girudo.jetset.customviews.CustomViewPager
+                    android:id="@+id/pager_data_detail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+    <Button
+        android:id="@+id/btn_add_cart"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/height_button"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/selectable_btn"
+        android:text="@string/prdct_txt_btn_cart"
+        android:textAllCaps="false"
+        android:textColor="@drawable/selectable_txt"
+        android:textSize="20sp" />
+</RelativeLayout>

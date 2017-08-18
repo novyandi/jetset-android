@@ -54,4 +54,15 @@
     <string name="acc_txt_hint_city">City</string>
     <string name="acc_txt_hint_state">State</string>
     <string name="acc_txt_hint_zip">Zip</string>
+
+    <!--product detail-->
+    <string name="prdct_txt_size">Size</string>
+    <string name="prdct_txt_size_XS">XS</string>
+    <string name="prdct_txt_size_S">S</string>
+    <string name="prdct_txt_size_M">M</string>
+    <string name="prdct_txt_size_L">L</string>
+    <string name="prdct_txt_size_XL">XL</string>
+    <string name="prdct_txt_size_XXL">XXL</string>
+    <string name="prdct_txt_color">Color</string>
+    <string name="prdct_txt_btn_cart">Add to Cart</string>
 </resources>
