@@ -4,12 +4,12 @@ apply plugin: 'realm-android'
 apply plugin: 'com.google.firebase.firebase-crash'
 
 android {
-    compileSdkVersion 25
-    buildToolsVersion "25.0.3"
+    compileSdkVersion 26
+    buildToolsVersion "26.0.1"
     defaultConfig {
         applicationId "xyz.girudo.jetset"
         minSdkVersion 15
-        targetSdkVersion 25
+        targetSdkVersion 26
         versionCode 1
         versionName "1.0.0"
 
@@ -40,9 +40,11 @@ buildscript {
     repositories {
         jcenter()
         mavenCentral()
+        google()
+        maven { url "https://oss.sonatype.org/content/repositories/snapshots" }
     }
     dependencies {
-        classpath 'com.jakewharton:butterknife-gradle-plugin:8.6.0'
+        classpath 'com.jakewharton:butterknife-gradle-plugin:9.0.0-SNAPSHOT'
         classpath 'com.google.firebase:firebase-plugins:1.0.5'
     }
 }
@@ -51,30 +53,30 @@ dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     testCompile 'junit:junit:4.12'
     // Android runner and rules support
-    androidTestCompile( 'com.android.support.test:runner:0.5', {
+    androidTestCompile('com.android.support.test:runner:0.5', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    androidTestCompile( 'com.android.support.test:rules:0.5', {
+    androidTestCompile('com.android.support.test:rules:0.5', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     // add this for intent mocking support
-    androidTestCompile( 'com.android.support.test.espresso:espresso-intents:2.2.2', {
+    androidTestCompile('com.android.support.test.espresso:espresso-intents:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     // add this for webview testing support
-    androidTestCompile( 'com.android.support.test.espresso:espresso-web:2.2.2', {
+    androidTestCompile('com.android.support.test.espresso:espresso-web:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    compile 'com.android.support:appcompat-v7:25.3.1'
-    compile 'com.android.support:cardview-v7:25.3.1'
-    compile 'com.android.support:design:25.3.1'
-    compile 'com.android.support:recyclerview-v7:25.3.1'
-    compile 'com.android.support:support-v4:25.3.1'
-    compile 'com.google.firebase:firebase-crash:10.2.6'
-    compile 'com.google.firebase:firebase-messaging:10.2.6'
+    compile 'com.android.support:appcompat-v7:26.0.1'
+    compile 'com.android.support:cardview-v7:26.0.1'
+    compile 'com.android.support:design:26.0.1'
+    compile 'com.android.support:recyclerview-v7:26.0.1'
+    compile 'com.android.support:support-v4:26.0.1'
+    compile 'com.google.firebase:firebase-crash:11.2.0'
+    compile 'com.google.firebase:firebase-messaging:11.2.0'
     compile 'com.mobsandgeeks:android-saripaar:2.0.3'
     compile 'com.github.bumptech.glide:glide:3.8.0'
     compile 'com.etsy.android.grid:library:1.0.5'
@@ -82,7 +84,7 @@ dependencies {
     compile 'io.realm:android-adapters:1.4.0'
     compile 'org.greenrobot:eventbus:3.0.0'
     compile 'com.github.JakeWharton:ViewPagerIndicator:2.4.1'
-    compile 'com.jakewharton:butterknife:8.6.0'
-    annotationProcessor 'com.jakewharton:butterknife-compiler:8.6.0'
+    compile 'com.jakewharton:butterknife:9.0.0-SNAPSHOT'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:9.0.0-SNAPSHOT'
 }
 apply plugin: 'com.google.gms.google-services'
