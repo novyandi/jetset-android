@@ -14,6 +14,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.firebase.analytics.FirebaseAnalytics;
+
 import xyz.girudo.jetset.R;
 import xyz.girudo.jetset.callbacks.OnActionbarListener;
 import xyz.girudo.jetset.fragments.BaseFragment;
@@ -38,10 +40,12 @@ public abstract class BaseActivity extends AppCompatActivity implements Activity
     private TextView tvActionBarTitle;
     private ImageView leftIcon, rightIcon;
     private boolean badgeRightShown;
+    private FirebaseAnalytics firebaseAnalytics;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        firebaseAnalytics = FirebaseAnalytics.getInstance(this);
         fragmentHelper = FragmentHelper.getInstance(getSupportFragmentManager());
         context = this;
         badgeRightShown = true;
@@ -239,5 +243,13 @@ public abstract class BaseActivity extends AppCompatActivity implements Activity
 
     public void setBadgeRightShown(boolean badgeRightShown) {
         this.badgeRightShown = badgeRightShown;
+    }
+
+    public FirebaseAnalytics getFirebaseAnalytics() {
+        return firebaseAnalytics;
+    }
+
+    public void setFirebaseAnalytics(FirebaseAnalytics firebaseAnalytics) {
+        this.firebaseAnalytics = firebaseAnalytics;
     }
 }

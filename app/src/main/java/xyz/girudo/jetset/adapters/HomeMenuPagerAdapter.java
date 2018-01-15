@@ -1,8 +1,11 @@
 package xyz.girudo.jetset.adapters;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
+
+import com.google.firebase.analytics.FirebaseAnalytics;
 
 import io.realm.RealmObject;
 import xyz.girudo.jetset.R;
@@ -18,10 +21,12 @@ import xyz.girudo.jetset.interfaces.OnItemClickListener;
  */
 public class HomeMenuPagerAdapter extends BaseAdapter<HomeMenu, RealmObject, RealmObject> {
     private OnItemClickListener onItemClickListener;
+    private Context context;
 
     public HomeMenuPagerAdapter(Context context, boolean withHeader, boolean withFooter, OnItemClickListener onItemClickListener) {
         super(context, withHeader, withFooter);
         this.onItemClickListener = onItemClickListener;
+        this.context = context;
     }
 
     @Override
@@ -34,7 +39,18 @@ public class HomeMenuPagerAdapter extends BaseAdapter<HomeMenu, RealmObject, Rea
 
     @Override
     public void onBindViewHolder(BaseHolder holder, int position) {
-        if (holder instanceof HomeMenuItemHolder)
+        if (holder instanceof HomeMenuItemHolder) {
+            HomeMenu item = getItem(position);
             ((HomeMenuItemHolder) holder).setData(getItem(position));
+            logEventAnalyticsShowItemHome(context, item.getTitle(), item.getImage());
+        }
+    }
+
+    private void logEventAnalyticsShowItemHome(Context context, String id, String nameItem) {
+        Bundle bundle = new Bundle();
+        bundle.putString(FirebaseAnalytics.Param.ITEM_ID, id);
+        bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, nameItem);
+        bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "image");
+        FirebaseAnalytics.getInstance(context).logEvent(FirebaseAnalytics.Event.VIEW_ITEM, bundle);
     }
 }
