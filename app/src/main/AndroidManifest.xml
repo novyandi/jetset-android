@@ -8,7 +8,7 @@
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
 
     <application
-        android:name="xyz.girudo.jetset.controllers.JetsetApp"
+android:name="xyz.girudo.jetset.controllers.JetsetApp"
         android:allowBackup="true"
         android:hardwareAccelerated="true"
         android:icon="@mipmap/ic_launcher"
@@ -48,6 +48,47 @@
                     android:scheme="http" />
             </intent-filter>
         </activity>
-    </application>
+        <activity
+            android:name="com.clevertap.android.sdk.InAppNotificationActivity"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"
+            android:configChanges="orientation|keyboardHidden"/>
 
+        <!--META-DATAS-->
+        <meta-data
+            android:name="CLEVERTAP_ACCOUNT_ID"
+            android:value="@string/CLEVERTAP_ACCOUNT_ID"/>
+        <meta-data
+            android:name="CLEVERTAP_TOKEN"
+            android:value="@string/CLEVERTAP_TOKEN"/>
+        <meta-data
+            android:name="CLEVERTAP_NOTIFICATION_ICON"
+            android:value="add_button"/>
+        <meta-data
+            android:name="CLEVERTAP_INAPP_EXCLUDE"
+            android:value="SplashScreenActivity" />
+
+        <!--SERVICES-->
+        <service
+            android:name="com.clevertap.android.sdk.FcmTokenListenerService">
+            <intent-filter>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
+            </intent-filter>
+        </service>
+
+        <service
+            android:name="com.clevertap.android.sdk.FcmMessageListenerService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+            </intent-filter>
+        </service>
+
+        <!--RECEIVER-->
+        <receiver
+            android:name="com.clevertap.android.sdk.InstallReferrerBroadcastReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.android.vending.INSTALL_REFERRER"/>
+            </intent-filter>
+        </receiver>
+    </application>
 </manifest>

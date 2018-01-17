@@ -20,11 +20,15 @@ import butterknife.ButterKnife;
 import io.realm.RealmObject;
 import xyz.girudo.jetset.R;
 import xyz.girudo.jetset.adapters.HomeMenuPagerAdapter;
+import xyz.girudo.jetset.controllers.CleverTapControl;
+import xyz.girudo.jetset.controllers.GoogleTagControl;
 import xyz.girudo.jetset.controllers.RealmDataControl;
 import xyz.girudo.jetset.customviews.BaseSwipeRefreshLayout;
 import xyz.girudo.jetset.entities.Events.OnSelectLeftMenu;
 import xyz.girudo.jetset.entities.HomeMenu;
 import xyz.girudo.jetset.interfaces.OnItemClickListener;
+import xyz.girudo.jetset.tags.EventTag;
+import xyz.girudo.jetset.tags.ParamTag;
 
 /**
  * Created by Novyandi Nurahmad on 11/20/16
@@ -56,6 +60,7 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
         homeList.setItemAnimator(new DefaultItemAnimator());
         homeList.setLayoutManager(new LinearLayoutManager(activity));
         homeList.setAdapter(homeMenuPagerAdapter);
+        GoogleTagControl.logEvent(EventTag.LOGINEVENT.eventName(), null);
     }
 
     @Override

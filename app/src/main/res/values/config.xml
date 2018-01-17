@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="JetsetEncryptKey">sh$f12HF33!</string>
+    <string name="CLEVERTAP_ACCOUNT_ID">8R5-6WW-6Z5Z</string>
+    <string name="CLEVERTAP_TOKEN">006-52b</string>
 </resources>

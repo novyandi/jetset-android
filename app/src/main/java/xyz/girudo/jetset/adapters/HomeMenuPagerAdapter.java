@@ -9,6 +9,7 @@ import com.google.firebase.analytics.FirebaseAnalytics;
 
 import io.realm.RealmObject;
 import xyz.girudo.jetset.R;
+import xyz.girudo.jetset.controllers.GoogleTagControl;
 import xyz.girudo.jetset.entities.HomeMenu;
 import xyz.girudo.jetset.holders.BaseHolder;
 import xyz.girudo.jetset.holders.HomeMenuHeaderHolder;
@@ -51,6 +52,6 @@ public class HomeMenuPagerAdapter extends BaseAdapter<HomeMenu, RealmObject, Rea
         bundle.putString(FirebaseAnalytics.Param.ITEM_ID, id);
         bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, nameItem);
         bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "image");
-        FirebaseAnalytics.getInstance(context).logEvent(FirebaseAnalytics.Event.VIEW_ITEM, bundle);
+        GoogleTagControl.logEvent(FirebaseAnalytics.Event.VIEW_ITEM, bundle);
     }
 }

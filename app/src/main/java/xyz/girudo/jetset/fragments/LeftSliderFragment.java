@@ -26,6 +26,7 @@ import xyz.girudo.jetset.R;
 import xyz.girudo.jetset.activities.MainActivity;
 import xyz.girudo.jetset.activities.SplashScreenActivity;
 import xyz.girudo.jetset.adapters.LeftMenuAdapter;
+import xyz.girudo.jetset.controllers.GoogleTagControl;
 import xyz.girudo.jetset.controllers.JetsetApp;
 import xyz.girudo.jetset.controllers.Preferences;
 import xyz.girudo.jetset.controllers.RealmDataControl;
@@ -34,6 +35,7 @@ import xyz.girudo.jetset.entities.LeftMenu;
 import xyz.girudo.jetset.helpers.AlertHelper;
 import xyz.girudo.jetset.holders.TypeHolder;
 import xyz.girudo.jetset.interfaces.OnItemClickListener;
+import xyz.girudo.jetset.tags.EventTag;
 
 /**
  * Created by Novyandi Nurahmad on 11/19/16
@@ -146,6 +148,7 @@ public class LeftSliderFragment extends BaseFragment implements OnItemClickListe
                                         JetsetApp.removeConfig(activity, Preferences.FIRST_START);
                                         RealmDataControl.getInstance(activity).clearRealm();
                                         getBaseActivity().changeActivity(SplashScreenActivity.class, true, null, Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                                        GoogleTagControl.logEvent(EventTag.LOGOUTEVENT.eventName(), null);
                                     }
                                 }).create().show();
                 break;

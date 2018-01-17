@@ -25,12 +25,15 @@ import butterknife.OnItemSelected;
 import io.realm.RealmObject;
 import xyz.girudo.jetset.R;
 import xyz.girudo.jetset.adapters.ArrivalPagerAdapter;
+import xyz.girudo.jetset.controllers.GoogleTagControl;
 import xyz.girudo.jetset.controllers.RealmDataControl;
 import xyz.girudo.jetset.customviews.BaseSwipeRefreshLayout;
 import xyz.girudo.jetset.entities.ItemSell;
 import xyz.girudo.jetset.helpers.AlertHelper;
 import xyz.girudo.jetset.holders.TypeHolder;
 import xyz.girudo.jetset.interfaces.OnItemClickListener;
+import xyz.girudo.jetset.tags.EventTag;
+import xyz.girudo.jetset.tags.ParamTag;
 
 /**
  * Created by Novyandi Nurahmad on 11/20/16
@@ -99,8 +102,15 @@ public class ArrivalFragment extends BaseFragment implements SwipeRefreshLayout.
 
     @Override
     public void onItemClickListener(View parent, View view, int viewTypeHolder, int position, RealmObject item) {
-        if (viewTypeHolder == TypeHolder.TYPE_ITEM)
-            AlertHelper.getInstance().showAlert(activity, "Show " + ((ItemSell) item).getTitle());
+        if (viewTypeHolder == TypeHolder.TYPE_ITEM) {
+            ItemSell itemSell = (ItemSell) item;
+            AlertHelper.getInstance().showAlert(activity, "Show " + itemSell.getTitle());
+            Bundle bundle = new Bundle();
+            bundle.putString(ParamTag.IDPARAM.paramName(), String.valueOf(itemSell.getId()));
+            bundle.putString(ParamTag.NAMEPARAM.paramName(), itemSell.getDescription());
+            bundle.putString(ParamTag.EVENTNAMEPARAM.paramName(), EventTag.JETSETEVENTNAME.eventName());
+            GoogleTagControl.logEvent(EventTag.CLICKEVENT.eventName(), bundle);
+        }
     }
 
     @Override

@@ -7,6 +7,9 @@ import android.text.Html;
 import android.text.Spanned;
 import android.util.Log;
 
+import com.clevertap.android.sdk.ActivityLifecycleCallback;
+import com.clevertap.android.sdk.CleverTapAPI;
+
 import xyz.girudo.jetset.R;
 
 /**
@@ -18,17 +21,17 @@ public class JetsetApp extends Application {
     public static final String TOKEN_KEY = "token";
     public static String TOKEN;
     private static SharedPreferences PREFERENCES;
-    private Context mContext;
+    private static Context mContext;
 
     public static void log(String message) {
-        if (Config.isDevelopment) {
+        if(Config.isDevelopment) {
             Log.i(Config.APP_NAME, message);
         }
     }
 
     public static void log(String message, String type) {
-        if (Config.isDevelopment) {
-            switch (type) {
+        if(Config.isDevelopment) {
+            switch(type) {
                 case "i":
                     Log.i(Config.APP_NAME, message);
                     break;
@@ -47,8 +50,8 @@ public class JetsetApp extends Application {
 
     public static Session getSession(Context context) {
         Session session = Session.getInstance();
-        if (session.getToken() == null) {
-            if (TOKEN == null) {
+        if(session.getToken() == null) {
+            if(TOKEN == null) {
                 TOKEN = JetsetApp.getConfig(context, JetsetApp.TOKEN_KEY);
             }
             session.setToken(TOKEN);
@@ -57,7 +60,7 @@ public class JetsetApp extends Application {
     }
 
     public static SharedPreferences getPreference(Context context) {
-        if (PREFERENCES == null) {
+        if(PREFERENCES == null) {
             PREFERENCES = context.getSharedPreferences(Config.PREFERENCE_NAME, Context.MODE_PRIVATE);
         }
         return PREFERENCES;
@@ -69,19 +72,19 @@ public class JetsetApp extends Application {
         String e_value = "";
         try {
             e_value = JetsetEncoder.encrypt(value, context.getString(R.string.JetsetEncryptKey));
-        } catch (Exception e) {
+        } catch(Exception e) {
             log(e.getMessage(), "e");
         }
         try {
             editor.putString(key, e_value);
-        } catch (Exception e) {
+        } catch(Exception e) {
             log(e.getMessage(), "e");
         }
         editor.commit();
-        if (key.equals(JetsetApp.TOKEN_KEY)) {
+        if(key.equals(JetsetApp.TOKEN_KEY)) {
             try {
                 JetsetApp.TOKEN = value;
-            } catch (Exception e) {
+            } catch(Exception e) {
                 e.printStackTrace();
             }
         }
@@ -92,7 +95,7 @@ public class JetsetApp extends Application {
         String value = "";
         try {
             value = JetsetEncoder.decrypt(preferences.getString(key, ""), context.getString(R.string.JetsetEncryptKey));
-        } catch (Exception e) {
+        } catch(Exception e) {
             log(e.getMessage(), "e");
         }
         return value;
@@ -103,7 +106,7 @@ public class JetsetApp extends Application {
         SharedPreferences.Editor editor = preferences.edit();
         try {
             editor.remove(key);
-        } catch (Exception e) {
+        } catch(Exception e) {
             log(e.getMessage(), "e");
         }
         editor.commit();
@@ -116,9 +119,9 @@ public class JetsetApp extends Application {
 
     @SuppressWarnings("deprecation")
     public static Spanned fromHtml(String html) {
-        if (html == null) html = "";
+        if(html == null) html = "";
         Spanned result;
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
+        if(android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
             result = Html.fromHtml(html, Html.FROM_HTML_MODE_LEGACY);
         } else {
             result = Html.fromHtml(html);
@@ -126,7 +129,7 @@ public class JetsetApp extends Application {
         return result;
     }
 
-    public Context getContext() {
+    public static Context getContext() {
         return mContext;
     }
 
@@ -136,9 +139,11 @@ public class JetsetApp extends Application {
 
     @Override
     public void onCreate() {
+        ActivityLifecycleCallback.register(this);
         super.onCreate();
         mContext = getApplicationContext();
         // Set Application Mode
         Config.setMode(this, Config.STAGING);
+        CleverTapAPI.setDebugLevel(CleverTapAPI.LogLevel.DEBUG);
     }
 }
